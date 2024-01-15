@@ -13,4 +13,7 @@
 - pnp 모드가 패키지의 정보를 해시 테이블마냥 기록해줘 디스크 I/O 과정이 생략되고 패키지들이 zip 파일로 압축돼 디스크 공간을 절약할 수 있다 하지만, 실제로는 이상적인 장점들과는 거리가 있다
   - 최초의 프로젝트 설치 시 node_modules를 설치하는 과정이나 매우 큰 zip 아카이브를 다운로드하는 과정이나 비슷비슷하다(오히려 zip 아카이브를 다운로드하는데 걸리는 시간 + yarn install을 실행하는 시간이 합쳐지면 [npm보다 더 느려질 수 있다](https://helloinyong.tistory.com/344)).
 
-3. pnpm 모드?
+3. pnpm 모드
+- node-modules 모드와 똑같이 node-modules를 사용하나 안에 .store 폴더가 생성된다
+- .store 폴더엔 의존성이 로컬 중앙 store(globalCache)로부터 연결돼있는 경로인 하드링크가 각 의존성 폴더마다 새겨져있다(`$HOME/.yarn/berry/index`). node_modules + pnp를 섞은 느낌이다.
+- yarn berry의 pnpm만 이런건지 pnpm 자체도 이런건지 모르겠으나, yarn의 pnpm모드는 이 하드링크가 역시나 사용자의 로컬 글로벌 캐시 위치에 따라 변경되므로 결국 무용지물이라 볼 수 있다.
